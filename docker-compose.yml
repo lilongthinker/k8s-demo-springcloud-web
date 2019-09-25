@@ -3,7 +3,7 @@ services:
   web:
     build:
         context: .
-    image: k8s-web:v1
+    image: k8s-web:v2
     ports:
       - 8080
     restart: always

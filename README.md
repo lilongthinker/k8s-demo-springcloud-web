@@ -10,3 +10,8 @@
 `./push-image.sh v9`
 只有一个参数是版本号，然后在k8s控制台就可以随意操作这个镜像
 本地运行命令的前提是先通过docker命令登录到对应的registy
+
+
+1. `push-image.sh v9`
+2. `k apply -f deploy.yaml`
+
