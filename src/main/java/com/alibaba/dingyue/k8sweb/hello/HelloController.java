@@ -23,12 +23,12 @@ public class HelloController {
         return "greeting from spring cloud. message in env:"+env;
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/api/hello")
     public String hello(@RequestParam String name){
         return "hello! " + name + " !";
     }
 
-    @RequestMapping("/student")
+    @RequestMapping("/api/student")
     public List<Student> list() {
         return studentRepo.findAll();
     }
