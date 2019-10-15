@@ -23,8 +23,15 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index(){
+        //no 生产环境禁止systemout
         System.out.println("hello. log to stdout");
+        //打印日志到文件
         log.info("hello.log to file. info");
+        //设计异常信息
+        Long now = System.currentTimeMillis();
+        if(now%10 == 0){
+            throw new RuntimeException("10 nanos exception. this is by designed");
+        }
 
         return "greeting from spring cloud. message in env:"+env;
     }
