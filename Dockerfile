@@ -1,13 +1,11 @@
-#FROM maven:3-jdk-8-alpine AS build-env
+FROM maven:3-jdk-8-alpine AS build-env
 
-#WORKDIR /app
-#COPY . /app
-#RUN mvn package  --settings ./setting/settings.xml-apache
+WORKDIR /app
+COPY . /app
+RUN mvn package
 
 FROM openjdk:8-jre
-#COPY --from=build-env /app/target/*.jar /app.jar
-WORKDIR /
-COPY target/*.jar /app.jar
+COPY --from=build-env /app/target/*.jar /app.jar
 
 ENV JAVA_OPTS=""
 ENV SERVER_PORT 8080
