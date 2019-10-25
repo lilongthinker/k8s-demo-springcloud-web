@@ -2,7 +2,6 @@ package com.alibaba.dingyue.k8sweb.hello;
 
 import com.alibaba.dingyue.k8sweb.data.Student;
 import com.alibaba.dingyue.k8sweb.repo.StudentRepo;
-import lombok.extern.flogger.Flogger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,11 +22,12 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index(){
-        //no 生产环境禁止systemout
-        System.out.println("hello. log to stdout");
-        //打印日志到文件
+//        //no 生产环境禁止systemout
+//        System.out.println("hello. log to stdout");
+        //打印日志到文件,同时到标准输出
         log.info("hello.log to file. info");
-        //设计异常信息
+
+        //设计异常信息,方便在arms里观察
         Long now = System.currentTimeMillis();
         if(now%10 == 0){
             throw new RuntimeException("10 nanos exception. this is by designed");
