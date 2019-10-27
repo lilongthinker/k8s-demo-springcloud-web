@@ -20,6 +20,9 @@ public class HelloController {
     @Value("${env}")
     private String env = "app_default";
 
+    @Value("${msg}")
+    private String msg = "java message";
+
     @RequestMapping("/")
     public String index(){
 //        //no 生产环境禁止systemout
@@ -33,16 +36,30 @@ public class HelloController {
             throw new RuntimeException("10 nanos exception. this is by designed");
         }
 
-        return "greeting from spring cloud. message in env:"+env;
+        return "greeting from spring cloud. message in env:"+env+"\n";
     }
 
     @RequestMapping("/hello")
     public String hello(@RequestParam String name){
-        return "hello! " + name + " !";
+        return "hello! " + name + " ! this is from "+msg+"\n";
     }
 
     @RequestMapping("/student")
     public List<Student> list() {
         return studentRepo.findAll();
+    }
+
+    @RequestMapping("/readiness/check")
+    public String readinessCheck(){
+        String msg = "readiness check it success!\n";
+        log.info(msg);
+        return msg;
+    }
+
+    @RequestMapping("/liveness/check")
+    public String livenessCheck(){
+        String msg = "liveness check it success!\n";
+        log.info(msg);
+        return msg;
     }
 }
