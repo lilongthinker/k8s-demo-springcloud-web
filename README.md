@@ -12,6 +12,7 @@ docker-compose.xml Jekinsfile kubernetes-deployment.yaml
 `./push-image.sh v9`
 只有一个参数是版本号，然后在k8s控制台就可以随意操作这个镜像
 本地运行命令的前提是先通过docker命令登录到对应的registy
+同时确保本地的docker仓库是启动的
 
 # 本地运行
 mvn clean package -Dmaven.test.skip=true
