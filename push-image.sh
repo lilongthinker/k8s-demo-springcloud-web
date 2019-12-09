@@ -7,3 +7,5 @@ docker build -t $imageName:$version ./
 ImageId=`docker build -t $imageName:v1 ./ |grep "Successfully built"|awk -F" " '{print $3}'`
 docker tag $ImageId registry.cn-beijing.aliyuncs.com/k8s-demo-dingyue/$imageName:$version
 docker push registry.cn-beijing.aliyuncs.com/k8s-demo-dingyue/$imageName:$version
+
+date
