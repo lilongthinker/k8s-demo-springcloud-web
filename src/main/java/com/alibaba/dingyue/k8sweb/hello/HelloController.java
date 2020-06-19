@@ -54,7 +54,7 @@ public class HelloController {
     public String headers(@RequestHeader HttpHeaders headers){
         StringBuilder sbuilder = new StringBuilder();
         for(Map.Entry<String,List<String>> entry : headers.entrySet()){
-            sbuilder.append(entry.getKey()).append(":").append( Joiner.on(",").join(entry.getValue())).append("---------------\n");
+            sbuilder.append(entry.getKey()).append(":").append( Joiner.on(",").join(entry.getValue())).append("---------------\n<br/>");
         }
         return sbuilder.toString();
     }
