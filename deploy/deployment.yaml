@@ -1,0 +1,118 @@
+apiVersion: apps/v1beta2 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: k8s-web
+  namespace: std-java
+  labels:
+    app: k8s-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-web
+  template:
+    metadata:
+      annotations:
+        ahasPilotAutoEnable: 'on'  #启用ahas  serverless集群暂时不支持该方法
+        ahasAppName: k8s-web-ahas  #ahas里的应用名
+        ahasNamespace: "stdjava"   #名字空间不允许中划线
+        armsPilotAutoEnable: 'on'  #启用arms serverless集群暂时不支持该方法
+        armsPilotCreateAppName: k8s-web-arms #arms里的应用名
+        armsNamespace: "stdjava"
+        mscPilotAutoEnable: "on"
+        mscPilotCreateAppName: "k8s-web-msc"
+      labels:
+        app: k8s-web
+    spec:
+      #hostNetwork: false
+      #nodeSelector:
+      #  workload_type: cpu # 使用该标签设定当前应用只能部署到弹出的节点上
+      # 以下多az部署我的ip段
+      # c: 10.1.243.22
+      # h: 10.5.17.222
+      # g: 10.6.111.111
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: failure-domain.beta.kubernetes.io/zone
+      #           operator: In
+      #           values:
+      #           - cn-beijing-c
+      #           - cn-beijing-g
+      #           - cn-beijing-h
+      #           - cn-beijing-d # 无效值
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: k8s-web
+        image: registry.cn-beijing.aliyuncs.com/k8s-demo-dingyue/k8s-web:centos # replace it with your exactly <image_name:tags>
+        ports:
+        - name: http
+          containerPort: 8080
+          # hostPort: 80
+        livenessProbe:
+          periodSeconds: 10
+          failureThreshold: 10 # 判定为失败重启
+          httpGet:
+            port: 8080
+            path: /liveness/check
+            scheme: HTTP
+          initialDelaySeconds: 40 # time after start container 即预期的程序启动时间
+          timeoutSeconds: 1
+        readinessProbe:
+          periodSeconds: 10 # 默认值就是10秒，可以不设置
+          failureThreshold: 3 # 共检查3次，间隔10秒钟 ； 判定为失败，摘除endpoint，不再有流量进来。
+          httpGet:
+            port: 8080
+            path: /readiness/check
+            scheme: HTTP
+          initialDelaySeconds: 40
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 4000Mi
+            ephemeral-storage: 10Gi
+          limits:
+            cpu: 2000m
+            memory: 4000Mi
+            ephemeral-storage: 10Gi
+        env:
+          - name: msg
+            value: from terway
+          - name: TZ
+            value: Asia/Shanghai
+          - name: db_domain
+            valueFrom:
+              secretKeyRef:
+                name: db.secret
+                key: db_domain
+          - name: db_user
+            valueFrom:
+              secretKeyRef:
+                name: db.secret
+                key: db_user
+          - name: db_pwd
+            valueFrom:
+              secretKeyRef:
+                name: db.secret
+                key: db_pwd
+        ######### 配置 环境变量 ###########  仅需要如下配置环境变量即可，注意开头必须是“aliyun_logs_”开头。其中 test-stdout 和 test-file可以自己定制
+          - name: aliyun_logs_test-stdout
+            value: stdout
+          - name: aliyun_logs_test-file
+            value: /logs/*.log
+        ######### 配置vulume mount #######
+        volumeMounts:
+        - name: volume-sls
+          mountPath: /logs
+      volumes:
+      - name: volume-sls
+        emptyDir: {}
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
