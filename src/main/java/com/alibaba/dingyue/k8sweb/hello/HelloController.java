@@ -37,6 +37,7 @@ public class HelloController {
         if(now%10 == 0){
             throw new RuntimeException("10 nanos exception. this is by designed");
         }
+        log.info("greeting from spring cloud. message in env:"+env+"\n");
         return "greeting from spring cloud. message in env:"+env+"\n";
     }
 
