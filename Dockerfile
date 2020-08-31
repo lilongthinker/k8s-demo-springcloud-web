@@ -6,6 +6,7 @@
 
 FROM openjdk:8-jre
 #COPY --from=build-env /app/target/*.jar /app.jar
+
 WORKDIR /
 COPY target/*.jar /app.jar
 
