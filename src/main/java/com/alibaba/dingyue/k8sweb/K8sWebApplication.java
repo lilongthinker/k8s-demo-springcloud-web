@@ -22,7 +22,7 @@ public class K8sWebApplication  {
 
 }
 
-
+@Slf4j
 class DebugSignalHandler implements SignalHandler {
 	public static void listenTo(String name) {
 		Signal signal = new Signal(name);
@@ -33,6 +33,12 @@ class DebugSignalHandler implements SignalHandler {
 		System.out.println("Signal: " + signal);
 		if (signal.toString().trim().equals("SIGTERM")) {
 			System.out.println("SIGTERM raised, terminating...");
+			log.info("SIGTERM raised, terminating...");
+			try {
+				Thread.currentThread().sleep(1000*10L);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			System.exit(1);
 		}
 	}
