@@ -32,6 +32,7 @@ class DebugSignalHandler implements SignalHandler {
 	public void handle(Signal signal) {
 		System.out.println("Signal: " + signal);
 		if (signal.toString().trim().equals("SIGTERM")) {
+			// 该信号会在container的prestop执行后，发送给容器内的1号进程
 			System.out.println("SIGTERM raised, terminating...");
 			log.info("SIGTERM raised, terminating...");
 			try {
