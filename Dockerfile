@@ -19,9 +19,9 @@ HEALTHCHECK --interval=10s --timeout=3s \
 	CMD curl -v --fail http://localhost:${SERVER_PORT} || exit 1
 
 # 如下方法进程号是1
-ENTRYPOINT [ "/usr/local/openjdk-8/bin/java","-jar","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005","/app.jar" ]
+ENTRYPOINT [ "/usr/local/openjdk-8/bin/java","-jar","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005","$JAVA_OPTS","/app.jar" ]
 
 # 造成 java进程非1号进程
-#ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.se    curity.egd=file:/dev/./urandom -jar /app.jar" ]
+#ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.se    curity.egd=file:/dev/./urandom -jar /app.jar" ,"-Dnetworkaddress.cache.ttl=0" ]
 
 
