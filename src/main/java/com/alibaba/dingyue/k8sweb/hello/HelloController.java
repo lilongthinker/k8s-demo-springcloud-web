@@ -48,6 +48,7 @@ public class HelloController {
 
     @RequestMapping("/student")
     public List<Student> list() {
+        log.info("url:student. called in controller");
         return studentRepo.findAll();
     }
 
