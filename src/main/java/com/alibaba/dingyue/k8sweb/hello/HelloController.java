@@ -37,6 +37,7 @@ public class HelloController {
         if(now%10 == 0){
             throw new RuntimeException("10 nanos exception. this is by designed");
         }
+        log.info("greeting from spring cloud. message in env:"+env);
         return "greeting from spring cloud. message in env:"+env+"\n";
     }
 
@@ -47,6 +48,7 @@ public class HelloController {
 
     @RequestMapping("/student")
     public List<Student> list() {
+        log.info("url:student. called in controller");
         return studentRepo.findAll();
     }
 

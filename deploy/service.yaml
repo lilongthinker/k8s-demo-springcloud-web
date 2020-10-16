@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-web-svc
+  labels:
+    app: k8s-web
+  annotations:
+    service.beta.kubernetes.io/alibaba-cloud-loadbalancer-spec: "slb.s1.small"
+    #    service.beta.kubernetes.io/alibaba-cloud-loadbalancer-address-type: "intranet"
+    # 关于SLB的详细说明 https://help.aliyun.com/document_detail/86531.html
+spec:
+  selector:
+    app: k8s-web
+  ports:
+  - name: http
+    port: 80 #集群内部服务之间访问的端口
+    protocol: TCP
+    targetPort: 8080 #容器本身暴露的端口，和dockerfile中的expose意思一样
+  type: LoadBalancer  # slb
+  externalTrafficPolicy: Local

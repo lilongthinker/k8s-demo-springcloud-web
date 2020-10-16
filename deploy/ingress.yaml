@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-ingress
+  namespace: std-java
+  annotations:
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+        mirror /mirror;
+    nginx.ingress.kubernetes.io/server-snippet: |
+        location = /mirror {
+            internal;
+            access_log off;
+            set $proxy_upstream_name    "std-java-k8s-web-svc-80";
+            set $shadow_service_name    "k8s-web-svc";
+            proxy_set_header X-Shadow-Service  $shadow_service_name;
+            proxy_set_header Host $mirror_servers;
+            if ($request_uri !~ "(student)" ){
+              proxy_pass http://$mirror_servers$request_uri;
+            }
+        }
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600" 
+spec:
+  rules:
+    - host: k8s-web.c57ea7a9d2d9c44bd82ab032fdd607daa.cn-beijing.alicontainer.com
+      # use your own domain as the host
+      http:
+        paths:
+          - backend:
+              serviceName: k8s-web-svc
+              servicePort: 80
+            path: /
