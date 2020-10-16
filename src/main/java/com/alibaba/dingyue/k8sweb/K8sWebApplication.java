@@ -3,6 +3,8 @@ package com.alibaba.dingyue.k8sweb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//@EnablePrometheusEndpoint
+//@EnableSpringBootMetricsCollector
 @SpringBootApplication
 public class K8sWebApplication {
 
