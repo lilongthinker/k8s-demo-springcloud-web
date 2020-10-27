@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -68,6 +69,16 @@ public class HelloController {
         return msg;
     }
 
+    private Map<Long, Byte[]> leakData = new HashMap<>();
+
+    @RequestMapping("/leak")
+    public String leak(){
+        long current = System.nanoTime();
+         Byte[] value = new Byte[1024];
+        leakData.put(current, value);
+        log.info("leaking");
+        return msg;
+    }
 
 
     @RequestMapping("/readiness/check")
