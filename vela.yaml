@@ -1,0 +1,12 @@
+createTime: "2020-11-24T16:45:38.094508176+08:00"
+name: k8s-web
+services:
+  k8s-web:
+    cpu: "1"
+    image: registry.cn-beijing.aliyuncs.com/k8s-demo-dingyue/k8s-web:leak12
+    port: 8080
+    route:
+      domain: k8s-web-svc.k8s-web.vela.com
+      issuer: oam-env-default
+    type: webservice
+updateTime: "2020-11-24T16:45:38.095773+08:00"
