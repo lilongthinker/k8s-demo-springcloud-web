@@ -15,7 +15,8 @@ USER 1200
 
 COPY target/*.jar /app.jar
 
-ENV JAVA_OPTS=""
+# add debug port
+ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 ENV SERVER_PORT 8080
 
 EXPOSE ${SERVER_PORT}
