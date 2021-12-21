@@ -31,5 +31,3 @@ HEALTHCHECK --interval=10s --timeout=3s \
 
 # 造成 java进程非1号进程
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
-
-
