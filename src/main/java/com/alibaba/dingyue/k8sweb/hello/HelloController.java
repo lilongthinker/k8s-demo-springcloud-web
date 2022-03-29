@@ -31,7 +31,7 @@ public class HelloController {
 //        //no 生产环境禁止systemout
 //        System.out.println("hello. log to stdout");
         //打印日志到文件,同时到标准输出
-        for(int i =0;i<10000;i++){
+        for(int i =0;i<10;i++){
             log.info("hello.log to file. info");
 	}
         log.info("hello.log to file. info");
