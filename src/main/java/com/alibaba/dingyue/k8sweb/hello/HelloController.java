@@ -55,6 +55,14 @@ public class HelloController {
         log.info("url:student. called in controller");
         return studentRepo.findAll();
     }
+    @RequestMapping("/loopstudent")
+    public List<Student> loopList() {
+        log.info("url:student. called in controller");
+        for (int i = 0; i < 1000; i++) {
+            studentRepo.findAll();
+        }
+        return studentRepo.findAll();
+    }
 
     @RequestMapping("/headers")
     public String headers(@RequestHeader HttpHeaders headers){
