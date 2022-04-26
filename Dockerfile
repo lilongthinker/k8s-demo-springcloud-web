@@ -30,4 +30,4 @@ HEALTHCHECK --interval=10s --timeout=3s \
 #ENTRYPOINT [ "/usr/local/openjdk-8/bin/java","-jar","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005","$JAVA_OPTS","/app.jar" ]
 
 # 造成 java进程非1号进程
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Xmx3000m -Xms3000m -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]
