@@ -5,6 +5,9 @@
 derrick 生成的文件非常多，包括
 docker-compose.xml Jekinsfile kubernetes-deployment.yaml
 
+# 项目运行环境
+* jdk8
+
 # 更新与发布项目
 
 最优解是通过ci/cd来进行
