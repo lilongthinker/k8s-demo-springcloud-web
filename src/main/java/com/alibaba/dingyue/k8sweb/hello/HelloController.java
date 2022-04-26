@@ -28,14 +28,13 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index(){
-//        //no 生产环境禁止systemout
+//        //no 生产环境禁止system out
 //        System.out.println("hello. log to stdout");
         //打印日志到文件,同时到标准输出
         for(int i =0;i<10;i++){
             log.info("hello.log to file. info");
-	}
+	    }
         log.info("hello.log to file. info");
-
         //设计异常信息,方便在arms里观察
         Long now = System.currentTimeMillis();
         if(now%10 == 0){
@@ -55,6 +54,15 @@ public class HelloController {
         log.info("url:student. called in controller");
         return studentRepo.findAll();
     }
+
+    @RequestMapping("/student/{id}")
+    public String getStudent(@PathVariable("id") Long id){
+        String msg = "path varibale. id = " + id;
+        log.info(msg);
+        return msg;
+    }
+
+
     @RequestMapping("/loopstudent")
     public List<Student> loopList() {
         log.info("url:student. called in controller");
