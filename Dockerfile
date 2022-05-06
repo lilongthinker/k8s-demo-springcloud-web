@@ -5,7 +5,9 @@
 #RUN mvn package  --settings ./setting/settings.xml-apache
 
 #FROM openjdk:8-jre
-FROM mamohr/centos-java:jdk8
+#FROM mamohr/centos-java:jdk8
+FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
+#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8
 #COPY --from=build-env /app/target/*.jar /app.jar
 
 WORKDIR /
