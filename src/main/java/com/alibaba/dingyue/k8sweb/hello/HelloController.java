@@ -63,7 +63,7 @@ public class HelloController {
     }
 
 
-    @RequestMapping("/loopstudent")
+    @RequestMapping("/anti-ms/loopstudent")
     public List<Student> loopList() {
         log.info("url:student. called in controller");
         for (int i = 0; i < 1000; i++) {
