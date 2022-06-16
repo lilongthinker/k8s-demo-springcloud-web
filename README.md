@@ -33,3 +33,6 @@ docker-compose up
 4. ingress 无
 5. 优雅上下线 无 -- 待完成
 6. test
+
+# touch 4 ci
+touch 1
