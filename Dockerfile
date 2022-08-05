@@ -1,14 +1,5 @@
-#FROM maven:3-jdk-8-alpine AS build-env
-
-#WORKDIR /app
-#COPY . /app
-#RUN mvn package  --settings ./setting/settings.xml-apache
-
-#FROM openjdk:8-jre
 #FROM mamohr/centos-java:jdk8
 FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
-#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8
-#COPY --from=build-env /app/target/*.jar /app.jar
 
 WORKDIR /
 
@@ -22,8 +13,6 @@ ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=500
 ENV SERVER_PORT 8080
 
 EXPOSE ${SERVER_PORT}
-
-
 
 HEALTHCHECK --interval=10s --timeout=3s \
 	CMD curl -v --fail http://localhost:${SERVER_PORT} || exit 1
