@@ -1,5 +1,6 @@
 #FROM mamohr/centos-java:jdk8
-FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
+#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
+FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-extended-ga-ubuntu
 
 WORKDIR /
 
