@@ -1,3 +1,20 @@
+#compile stage
+FROM maven:3.6.3-openjdk-8 AS builder
+ #  AS builder 起别名
+
+RUN mkdir /build
+# 创建临时文件
+
+ADD src /build/src
+#将 src目录复制到临时目录
+
+ADD pom.xml /build
+# 将 pom文件复制到临时目录
+
+RUN cd /build && mvn -B -ntp package
+
+
+#build stage
 #FROM mamohr/centos-java:jdk8
 #FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
 FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
