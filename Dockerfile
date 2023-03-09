@@ -19,7 +19,7 @@ RUN cd /build && mvn -B -ntp package
 #FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
 FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
 
-WORKDIR /
+WORKDIR /build
 
 RUN groupadd polaris && adduser -u 1200 -g polaris polaris
 USER 1200
