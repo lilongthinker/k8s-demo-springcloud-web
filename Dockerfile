@@ -11,21 +11,21 @@ ADD src /build/src
 ADD pom.xml /build
 # 将 pom文件复制到临时目录
 
-RUN cd /build && mvn -B -ntp package
+RUN cd /build && mvn clean package -Dmaven.test.skip=true
 
 
 #build stage
 #FROM mamohr/centos-java:jdk8
 #FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
-FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux
+FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux 
 
 WORKDIR /build
 
 RUN groupadd polaris && adduser -u 1200 -g polaris polaris
 USER 1200
 
-COPY target/*.jar /app.jar
-
+#COPY target/*.jar /app.jar
+COPY --from=builder /build/target/*.jar /app.jar
 # add debug port
 ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 ENV SERVER_PORT 8080
