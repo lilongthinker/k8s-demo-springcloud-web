@@ -35,6 +35,3 @@ docker-compose up
 6. 集成Prometheus，应用、service, service-monitor
 
 # touch 4 ci
-touch 1
-touch 2
-touch 3
