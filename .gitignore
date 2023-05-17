@@ -5,3 +5,5 @@ target
 .settings
 k8s-web.iml
 .project
+/.idea/
+/dep.txt
