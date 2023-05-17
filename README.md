@@ -32,7 +32,7 @@ docker-compose up
 3. 数据库 已集成
 4. ingress 无
 5. 优雅上下线 无 -- 待完成
-6. test
+6. 集成Prometheus，应用、service, service-monitor
 
 # touch 4 ci
 touch 1
