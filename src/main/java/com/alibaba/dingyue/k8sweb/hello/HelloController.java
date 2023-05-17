@@ -48,6 +48,12 @@ public class HelloController {
     public String hello(@RequestParam String name){
         return "hello! " + name + " ! this is from "+msg+"\n";
     }
+    
+    @RequestMapping("/delay/{duration}")
+    public String delay(@PathVariable("duration") Long duration) throws InterruptedException{
+        Thread.sleep(duration);
+        return "sleep duration= " + duration + " !";
+    }
 
     @RequestMapping("/student")
     public List<Student> list() {
@@ -63,7 +69,7 @@ public class HelloController {
     }
 
 
-    @RequestMapping("/loopstudent")
+    @RequestMapping("/anti-ms/loopstudent")
     public List<Student> loopList() {
         log.info("url:student. called in controller");
         for (int i = 0; i < 1000; i++) {

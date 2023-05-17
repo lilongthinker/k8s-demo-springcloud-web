@@ -4,3 +4,4 @@ target
 .classpath
 .settings
 k8s-web.iml
+.project

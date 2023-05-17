@@ -1,27 +1,36 @@
-#FROM maven:3-jdk-8-alpine AS build-env
+#compile stage
+FROM maven:3.6.3-openjdk-8 AS builder
+ #  AS builder 起别名
 
-#WORKDIR /app
-#COPY . /app
-#RUN mvn package  --settings ./setting/settings.xml-apache
+RUN mkdir /build
+# 创建临时文件
 
-#FROM openjdk:8-jre
-FROM mamohr/centos-java:jdk8
-#COPY --from=build-env /app/target/*.jar /app.jar
+ADD src /build/src
+#将 src目录复制到临时目录
 
-WORKDIR /
+ADD pom.xml /build
+# 将 pom文件复制到临时目录
+
+RUN cd /build && mvn clean package -Dmaven.test.skip=true
+
+
+#build stage
+#FROM mamohr/centos-java:jdk8
+#FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:dragonwell-8.10.11_jdk8u322-ga-x86_64
+FROM dragonwell-registry.cn-hangzhou.cr.aliyuncs.com/dragonwell/dragonwell:8-alinux 
+
+WORKDIR /build
 
 RUN groupadd polaris && adduser -u 1200 -g polaris polaris
 USER 1200
 
-COPY target/*.jar /app.jar
-
+#COPY target/*.jar /app.jar
+COPY --from=builder /build/target/*.jar /app.jar
 # add debug port
 ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 ENV SERVER_PORT 8080
 
 EXPOSE ${SERVER_PORT}
-
-
 
 HEALTHCHECK --interval=10s --timeout=3s \
 	CMD curl -v --fail http://localhost:${SERVER_PORT} || exit 1
