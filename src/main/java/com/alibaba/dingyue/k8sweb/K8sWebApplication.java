@@ -1,8 +1,12 @@
 package com.alibaba.dingyue.k8sweb;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -20,7 +24,11 @@ public class K8sWebApplication  {
 
 		SpringApplication.run(K8sWebApplication.class, args);
 	}
-
+	@Bean
+	MeterRegistryCustomizer<MeterRegistry> configurer(
+			@Value("${spring.application.name}") String applicationName) {
+		return (registry) -> registry.config().commonTags("application", applicationName);
+	}
 
 }
 

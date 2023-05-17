@@ -12,7 +12,7 @@
         </filter>
     </appender>
     <appender name="LogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>/logs/logfile.log</File>
+        <File>~/.logs/logfile.log</File>
         <Append>true</Append>
         <encoder>
             <pattern>%X{EagleEye-TraceID} %d [%t] %p %logger{0} - %m%n</pattern>
